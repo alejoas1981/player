@@ -1,0 +1,265 @@
+/**
+ * Universal Player CSS Styles
+ */
+
+/* Player Container */
+.universal-player-container {
+    position: relative;
+    width: 100%;
+    background: #000;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.up-player {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+    --up-primary-color: #FF6B00;
+}
+
+/* Video Element */
+.up-video, .up-audio {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.up-vertical .up-video {
+    object-fit: cover;
+}
+
+/* Controls */
+.up-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.up-controls-visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.up-control-bar {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 12px;
+}
+
+.up-controls-left,
+.up-controls-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.up-controls-center {
+    flex: 1;
+}
+
+/* Progress Bar */
+.up-progress-container {
+    height: 20px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    cursor: pointer;
+}
+
+.up-progress-track {
+    width: 100%;
+    height: 4px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 2px;
+    position: relative;
+}
+
+.up-progress-buffer {
+    height: 100%;
+    background: rgba(255,255,255,0.5);
+    border-radius: 2px;
+    width: 0%;
+}
+
+.up-progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: var(--up-primary-color);
+    border-radius: 2px;
+    width: 0%;
+}
+
+.up-progress-handle {
+    position: absolute;
+    top: -6px;
+    width: 16px;
+    height: 16px;
+    background: var(--up-primary-color);
+    border-radius: 50%;
+    margin-left: -8px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.up-progress-track:hover .up-progress-handle {
+    opacity: 1;
+}
+
+/* Buttons */
+.up-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    transition: background-color 0.2s;
+}
+
+.up-btn:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.up-big-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.8);
+    border: none;
+    color: white;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.up-big-play-btn:hover {
+    background: var(--up-primary-color);
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Volume Controls */
+.up-volume-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.up-volume-slider {
+    width: 60px;
+    height: 4px;
+    background: rgba(255,255,255,0.3);
+    outline: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.up-volume-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--up-primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Time Display */
+.up-time-display {
+    font-size: 14px;
+    color: white;
+    min-width: 80px;
+    text-align: center;
+}
+
+/* Spinner */
+.up-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 24px;
+    animation: spin 1s linear infinite;
+    display: none;
+}
+
+@keyframes spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Top Bar */
+.up-top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    background: linear-gradient(rgba(0,0,0,0.8), transparent);
+}
+
+.up-logo {
+    height: 32px;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .up-control-bar {
+        padding: 8px 12px;
+        gap: 8px;
+    }
+
+    .up-btn {
+        min-width: 44px;
+        height: 44px;
+    }
+
+    .up-volume-container {
+        display: none;
+    }
+
+    .up-big-play-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 20px;
+    }
+}
+
+/* Fullscreen */
+.up-player:-webkit-full-screen {
+    width: 100vw;
+    height: 100vh;
+}
+
+.up-player:-moz-full-screen {
+    width: 100vw;
+    height: 100vh;
+}
+
+.up-player:fullscreen {
+    width: 100vw;
+    height: 100vh;
+}
