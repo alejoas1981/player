@@ -8,6 +8,7 @@ const files = [
     './src/media/VideoSource.js',
     './src/media/AudioSource.js',
     './src/media/DASHSource.js',
+    './src/libs/hls.js',
     './src/media/HLSSource.js',
     './src/media/Mp4Source.js',
     './src/core/MediaFactory.js',

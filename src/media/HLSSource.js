@@ -7,6 +7,7 @@ class HLSSource extends VideoSource {
         this.hls = null;
         this.qualities = [];
         this.currentQuality = 'auto';
+        this.videoElement = this.config.container.querySelector('.up-video');
     }
 
     /**
@@ -27,7 +28,6 @@ class HLSSource extends VideoSource {
      */
     async loadNativeHLS() {
         return new Promise((resolve, reject) => {
-            this.videoElement = this.config.container.querySelector('.up-video');
 
             if (!this.videoElement) {
                 reject(new Error('Video element not found'));
@@ -54,8 +54,6 @@ class HLSSource extends VideoSource {
     async loadHLSjs() {
         return new Promise(async (resolve, reject) => {
             try {
-                // Dynamically import HLS.js (would need to be available)
-                // For now, we'll simulate the HLS.js functionality
                 this.hls = await this.createHLSInstance();
 
                 this.videoElement = this.config.container.querySelector('.up-video');
@@ -92,34 +90,14 @@ class HLSSource extends VideoSource {
      * Create HLS instance (simulated)
      */
     async createHLSInstance() {
-        // In a real implementation, this would use HLS.js
-        // For demonstration, we'll create a mock HLS object
-        return {
-            loadSource: (url) => {
-                console.log(`Loading HLS source: ${url}`);
-            },
-            attachMedia: (videoElement) => {
-                console.log('Attaching HLS to video element');
-                // Fallback to regular video loading
-                videoElement.src = this.url;
-            },
-            on: (event, callback) => {
-                // Simulate events
-                if (event === 'MANIFEST_PARSED') {
-                    setTimeout(() => callback(), 1000);
-                }
-            },
-            levels: [
-                { height: 1080, bitrate: 5000000, name: '1080p' },
-                { height: 720, bitrate: 2500000, name: '720p' },
-                { height: 480, bitrate: 1200000, name: '480p' },
-                { height: 360, bitrate: 800000, name: '360p' }
-            ],
-            currentLevel: -1, // -1 for auto
-            destroy: () => {
-                console.log('HLS instance destroyed');
-            }
-        };
+        if (typeof Hls === 'undefined') {
+            throw new Error('Hls.js library is not loaded');
+        }
+
+        const hls = new Hls();
+        hls.loadSource(this.url);
+        hls.attachMedia(this.videoElement);
+        return hls;
     }
 
     /**
